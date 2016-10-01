@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuietTicketScanner</string>
+    <string name="title_activity_loading_controller">Laden</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="verifying_connection">Verbinding controleren</string>
+</resources>
