@@ -5,4 +5,8 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="verifying_connection">Verbinding controleren</string>
+    <string name="close">Sluiten</string>
+    <string name="network">Netwerk</string>
+    <string name="cannotConnectToServer">Kan geen verbinding maken met de server</string>
+    <string name="token">Toegangscode</string>
 </resources>

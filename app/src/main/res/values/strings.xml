@@ -5,4 +5,8 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="verifying_connection">Verifying connection</string>
+    <string name="close">Close</string>
+    <string name="network">Network</string>
+    <string name="cannotConnectToServer">Cannot connect to the server</string>
+    <string name="token">Access Token</string>
 </resources>
