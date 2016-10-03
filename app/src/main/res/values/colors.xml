@@ -3,6 +3,8 @@
     <color name="colorPrimary">#5d5d9a</color>
     <color name="colorPrimaryDark">#1e2247</color>
     <color name="colorAccent">#FFF</color>
+    <color name="colorErrorMessage">#B13D3D</color>
+    <color name="colorSuccessMessage">#50A761</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>
