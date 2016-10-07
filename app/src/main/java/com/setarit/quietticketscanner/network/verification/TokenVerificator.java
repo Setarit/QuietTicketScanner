@@ -37,7 +37,7 @@ public class TokenVerificator implements ServerResponseParsable {
 
     @Override
     public void handleResponse(JSONObject response) throws JSONException {
-        if(response.getInt("code") == 1){
+        if(response == null || response.getInt("code") == 1){//server will return 200 without message if the code is valid
             SharedPreferences settings = context.getSharedPreferences("PREFS", 0);
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("accessCode", token).apply();

@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.setarit.quietticketscanner">
 
+    <uses-sdk android:minSdkVersion="17" />
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-sdk android:minSdkVersion="17" />
 
     <application
         android:allowBackup="true"
@@ -22,8 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TokenController"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".TokenController"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ScanController"></activity>
     </application>
 
 </manifest>
