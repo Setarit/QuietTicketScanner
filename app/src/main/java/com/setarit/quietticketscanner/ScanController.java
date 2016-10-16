@@ -1,42 +1,48 @@
 package com.setarit.quietticketscanner;
 
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.os.Build;
+import android.graphics.PointF;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.hardware.camera2.*;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
-import com.setarit.quietticketscanner.view.listeners.CameraSourceChangeListener;
+import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 
-public class ScanController extends AppCompatActivity {
+public class ScanController extends AppCompatActivity implements QRCodeReaderView.OnQRCodeReadListener {
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private QRCodeReaderView mydecoderview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_controller);
-        setTitle(R.string.scan);
+        //init QR reading
+        initQRReading();
+    }
 
-        try {
-            getAllCameras();
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
+    private void initQRReading() {
+        mydecoderview = (QRCodeReaderView) findViewById(R.id.qrdecoderview);
+        if(mydecoderview != null) {
+            mydecoderview.setOnQRCodeReadListener(this);
+            mydecoderview.setQRDecodingEnabled(true);// enable decoding
+            mydecoderview.setBackCamera();//use back camera
+
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void getAllCameras() throws CameraAccessException {
-        CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-        String[] cameraIds = manager.getCameraIdList();
-        Spinner cameraList = (Spinner) findViewById(R.id.camera_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cameraIds);
-        if(cameraList != null) {
-            cameraList.setAdapter(adapter);
-        }
-        cameraList.setOnItemClickListener(new CameraSourceChangeListener(this, adapter));
-        return ;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mydecoderview.startCamera();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mydecoderview.stopCamera();
+    }
+
+
+    @Override
+    public void onQRCodeRead(String text, PointF[] points) {
+
     }
 }
