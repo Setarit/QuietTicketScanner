@@ -11,4 +11,8 @@
     <string name="token">Toegangscode</string>
     <string name="scan">Scan</string>
     <string name="camera">Camera</string>
+    <string name="insufficientPermissions">Onvoldoende machtigingen</string>
+    <string name="insufficientCameraPermissions">De app heeft geen toegang tot de camera. Gelieve de app opnieuw op te starten en toegang te geven tot de camera</string>
+    <string name="useFlashLight">Gebruik flash</string>
+    <string name="useFrontCamera">Gebruik camera vooraan</string>
 </resources>

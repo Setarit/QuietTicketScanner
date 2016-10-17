@@ -11,4 +11,8 @@
     <string name="token">Access Token</string>
     <string name="scan">Scan</string>
     <string name="camera">Camera</string>
+    <string name="insufficientPermissions">Insufficient Permissions</string>
+    <string name="insufficientCameraPermissions">The app has no permission to access the camera. Please restart the app and allow camera access</string>
+    <string name="useFlashLight">Use Flashlight</string>
+    <string name="useFrontCamera">Use Front Camera</string>
 </resources>
