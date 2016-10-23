@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 /**
  * Created by Setarit on 17/10/2016.
+ * Verifies if the token is valid to start scanning
  */
 
 public class TicketVerificator implements ServerResponseParsable {
@@ -31,11 +32,24 @@ public class TicketVerificator implements ServerResponseParsable {
 
     private String fetchAccessCode() {
         SharedPreferences preferences = scanController.getApplicationContext().getSharedPreferences("PREFS", 0);
-        return preferences.getString("accessToken","noTokenAvailable");
+        return preferences.getString("accessCode","noTokenAvailable");//returns default value
     }
 
     @Override
     public void handleResponse(JSONObject response) throws JSONException {
-        int i = 0;
+        switch (response.getInt("code")) {
+            case 1:
+                scanController.showValidTicketInfo(response.getString("seat"));
+                break;
+            case -1:
+                scanController.showTicketAlreadyScanned(response.getString("message"));
+                break;
+            case -2:
+                scanController.showNoPayementReceived(response.getString("message"));
+                break;
+            default:
+                scanController.showGenericInvalidTicket(response.getString("message"));
+                break;
+        }
     }
 }

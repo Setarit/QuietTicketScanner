@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuietTicketScanner</string>
+    <string name="close">Fermer</string>
+    <string name="camera">Caméra</string>
+    <string name="cannotConnectToServer">Impossible de se connecter au serveur</string>
+    <string name="continue_scanning">Continuer</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY</string>
+    <string name="insufficientCameraPermissions">L\'application n\'a pas accès à la caméra. Vous devez relancer l\'application et donner l\'accès à la caméra</string>
+    <string name="insufficientPermissions">Autorisations insuffisantes</string>
+    <string name="network">Réseau</string>
+    <string name="scan">Lire</string>
+    <string name="title_activity_loading_controller">Chargement en cours</string>
+    <string name="token">Code d\'accès</string>
+    <string name="useFlashLight">Utiliser Flashlight</string>
+    <string name="useFrontCamera">Utilisez l\'appareil photo frontal</string>
+    <string name="verifying_connection">Vérifier la connexion</string>
+    <string name="status_image">Status</string>
+</resources>

@@ -4,13 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.net.UnknownHostException;
 
 /**
  * Created by Setarit on 01/10/2016.
@@ -43,7 +38,7 @@ public class NetworkStateChecker {
     }
 
     private boolean canConnectWithServer(){
-        URL url = null;
+        URL url;
         try {
             url = new URL(SERVER_ROOT_ADDRESS);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();

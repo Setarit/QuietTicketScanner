@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLEncoder;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -18,7 +17,7 @@ import static com.setarit.quietticketscanner.network.state.NetworkStateChecker.S
  */
 
 public class ApiRequest {
-    public static final String API_SERVER_ROOT_ADDRESS = SERVER_ROOT_ADDRESS+"/api/";
+    private static final String API_SERVER_ROOT_ADDRESS = SERVER_ROOT_ADDRESS+"/api/";
 
     private JSONObject response;
     private int responseCode;
@@ -51,7 +50,7 @@ public class ApiRequest {
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
-        StringBuffer response = new StringBuffer();
+        StringBuilder response = new StringBuilder();
 
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
@@ -80,7 +79,7 @@ public class ApiRequest {
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
-        StringBuffer response = new StringBuffer();
+        StringBuilder response = new StringBuilder();
 
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);

@@ -15,4 +15,6 @@
     <string name="insufficientCameraPermissions">The app has no permission to access the camera. Please restart the app and allow camera access</string>
     <string name="useFlashLight">Use Flashlight</string>
     <string name="useFrontCamera">Use Front Camera</string>
+    <string name="continue_scanning">Continue Scanning</string>
+    <string name="status_image">Status</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.setarit.quietticketscanner.view.listeners;
 
-import android.content.Context;
 import android.view.KeyEvent;
 import android.widget.TextView;
 

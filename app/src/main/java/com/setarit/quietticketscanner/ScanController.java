@@ -1,23 +1,27 @@
 package com.setarit.quietticketscanner;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PointF;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.setarit.quietticketscanner.network.verification.TicketVerificator;
+import com.setarit.quietticketscanner.ticket.InvalidTicketController;
+import com.setarit.quietticketscanner.ticket.TicketAlreadyScannedController;
+import com.setarit.quietticketscanner.ticket.ValidTicketController;
 import com.setarit.quietticketscanner.view.listeners.FlashCheckboxChanged;
-import com.setarit.quietticketscanner.view.listeners.FrontCameraCheckboxChanged;
 
 public class ScanController extends AppCompatActivity implements QRCodeReaderView.OnQRCodeReadListener {
 
     private QRCodeReaderView mydecoderview;
     private TicketVerificator ticketVerificator;
+    public static final int DISPLAY_TICKET_STATUS = 22;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,5 +101,34 @@ public class ScanController extends AppCompatActivity implements QRCodeReaderVie
 
     public void disableFlash() {
         mydecoderview.setTorchEnabled(false);
+    }
+
+    public void showValidTicketInfo(String seat) {
+        Intent intent = new Intent(this, ValidTicketController.class);
+        intent.putExtra("seat", seat);
+        startActivityForResult(intent, DISPLAY_TICKET_STATUS);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == DISPLAY_TICKET_STATUS && resultCode == Activity.RESULT_OK){
+            mydecoderview.setQRDecodingEnabled(true);//restart decoding
+        }
+    }
+
+    public void showTicketAlreadyScanned(String message) {
+        Intent intent = new Intent(this, TicketAlreadyScannedController.class);
+        intent.putExtra("message", message);
+        startActivityForResult(intent, DISPLAY_TICKET_STATUS);
+    }
+
+    public void showNoPayementReceived(String message) {
+        showGenericInvalidTicket(message);
+    }
+
+    public void showGenericInvalidTicket(String message) {
+        Intent intent = new Intent(this, InvalidTicketController.class);
+        intent.putExtra("message", message);
+        startActivityForResult(intent, DISPLAY_TICKET_STATUS);
     }
 }

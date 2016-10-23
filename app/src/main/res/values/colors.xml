@@ -5,6 +5,7 @@
     <color name="colorAccent">#FFF</color>
     <color name="colorErrorMessage">#B13D3D</color>
     <color name="colorSuccessMessage">#50A761</color>
+    <color name="colorWarningMessage">#DA9F69</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>
