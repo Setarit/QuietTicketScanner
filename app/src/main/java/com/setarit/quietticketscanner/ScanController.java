@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
@@ -32,6 +33,7 @@ public class ScanController extends AppCompatActivity implements QRCodeReaderVie
         //init QR reading
         initQRReading();
         setTitle(R.string.scan);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private void initCheckboxes() {
