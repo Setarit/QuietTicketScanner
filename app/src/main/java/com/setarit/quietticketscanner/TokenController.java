@@ -6,6 +6,9 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -21,6 +24,22 @@ public class TokenController extends AppCompatActivity {
         setContentView(R.layout.activity_token_controller);
         setTitle(R.string.token);
         setTokenInputListeners();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.menu_about){
+            startActivity(new Intent(this, InfoController.class));
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.token_menu, menu);
+        return true;
     }
 
     private void setTokenInputListeners() {

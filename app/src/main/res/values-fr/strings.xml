@@ -17,4 +17,10 @@
     <string name="useFrontCamera">Utilisez l\'appareil photo frontal</string>
     <string name="verifying_connection">Vérifier la connexion</string>
     <string name="status_image">Status</string>
+    <string name="about">A propos</string>
+    <string name="info">Info</string>
+    <string name="license">Licence</string>
+    <string name="qr_reader_license">QR Licence</string>
+    <string name="general_license">Licence général</string>
+    <string name="about_content">Cette application doit être utilisé conjointement avec https://quietticket.com. S\'il vous plaît noter que QuietTicket est un produit et une marque déposée de Setarit. Le code source de cette application est disponible gratuitement sur https://github.com/Setarit/QuietTicketScanner. Plus de produits et d\'informations peuvent être trouvées à http://setarit.com</string>
 </resources>

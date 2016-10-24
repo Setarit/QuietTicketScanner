@@ -17,4 +17,10 @@
     <string name="useFrontCamera">Gebruik camera vooraan</string>
     <string name="continue_scanning">Scannen hervatten</string>
     <string name="status_image">Status</string>
+    <string name="about">Over</string>
+    <string name="info">Info</string>
+    <string name="license">Licentie</string>
+    <string name="qr_reader_license">QR licentie</string>
+    <string name="general_license">Algemene licentie</string>
+    <string name="about_content">Deze app dient te worden gebruikt in combinatie met https://quietticket.com. Houd er rekening mee dat QuietTicket een product en handelsmerk van Setarit is. De broncode van deze app is vrij beschikbaar op https://github.com/Setarit/QuietTicketScanner meer producten en informatie is te vinden op http://setarit.com</string>
 </resources>
