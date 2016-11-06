@@ -4,8 +4,11 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import java.net.HttpURLConnection;
+import com.setarit.quietticketscanner.network.factory.HttpsUrlConnectionFactory;
+
 import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by Setarit on 01/10/2016.
@@ -41,11 +44,14 @@ public class NetworkStateChecker {
         URL url;
         try {
             url = new URL(SERVER_ROOT_ADDRESS);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection connection = HttpsUrlConnectionFactory.createConnection(url);
+            connection.setRequestProperty( "Accept-Encoding", "" );//prevent android bug in HEAD request
             connection.setRequestMethod("HEAD");
             connection.connect();
+            int r = connection.getResponseCode();
             return (connection.getResponseCode() != 404 && connection.getResponseCode() != 503);
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
