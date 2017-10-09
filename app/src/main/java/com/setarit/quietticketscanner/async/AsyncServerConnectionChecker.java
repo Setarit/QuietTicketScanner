@@ -2,9 +2,6 @@ package com.setarit.quietticketscanner.async;
 
 import android.os.AsyncTask;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.security.ProviderInstaller;
 import com.setarit.quietticketscanner.LoadingController;
 import com.setarit.quietticketscanner.network.state.NetworkStateChecker;
 

@@ -73,7 +73,7 @@ public class LoadingController extends AppCompatActivity {
 
     public void toScanningCodeActivity() {
         Intent intent = new Intent();
-        startActivity(new Intent(this, TokenController.class));
+        startActivity(new Intent(this, ScanFileLoaderController_.class));
         finish();
     }
 }

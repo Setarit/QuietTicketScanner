@@ -11,6 +11,10 @@
 
     <uses-feature android:name="android.hardware.camera" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="false"
@@ -42,7 +46,8 @@
         <activity
             android:name=".ticket.InvalidTicketController"
             android:screenOrientation="portrait" />
-        <activity android:name=".InfoController"></activity>
+        <activity android:name=".InfoController" />
+        <activity android:name=".ScanFileLoaderController_"/>
     </application>
 
 </manifest>

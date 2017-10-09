@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.setarit.quietticketscanner.fragments.StepFragment_">
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_weight="33"
+        android:layout_height="match_parent"
+        android:id="@+id/openJsonButton"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@android:color/white"
+        android:text="@string/openJsonFile"/>
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_weight="33"
+        android:layout_height="match_parent"
+        android:id="@+id/scanButton"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@android:color/white"
+        android:text="@string/scan"/>
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_weight="33"
+        android:layout_height="match_parent"
+        android:id="@+id/saveJsonButton"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@android:color/white"
+        android:text="@string/saveJsonFile"/>
+</LinearLayout>
