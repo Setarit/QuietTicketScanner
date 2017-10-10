@@ -5,12 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:orientation="vertical"
     tools:context="com.setarit.quietticketscanner.ScanFileLoaderController_">
 
     <fragment
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
         android:id="@+id/stepFragment"
         android:name="com.setarit.quietticketscanner.fragments.StepFragment_"/>
 
+    <RelativeLayout
+        android:id="@+id/fileLoaderContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="90">
+
+        <Button
+            android:id="@+id/findJsonScanFile"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/findJsonFile" />
+    </RelativeLayout>
 </LinearLayout>

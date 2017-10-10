@@ -33,4 +33,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <!-- TODO: Remove or change this placeholder text -->
     <string name="openJsonFile">Open a scanning file</string>
     <string name="saveJsonFile">Save the scan file</string>
+    <string name="findJsonFile">Find a scanning file</string>
+    <string name="loading">Loading</string>
+    <string name="loadingFailed">Loading failed</string>
 </resources>
