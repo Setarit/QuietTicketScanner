@@ -34,6 +34,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
     compile 'com.android.support:support-v4:26.+'
+    compile 'com.google.code.gson:gson:2.8.2'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'org.androidannotations:androidannotations:4.3.1'
 }

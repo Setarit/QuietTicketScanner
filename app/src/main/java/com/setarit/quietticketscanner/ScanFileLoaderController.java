@@ -2,14 +2,20 @@ package com.setarit.quietticketscanner;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+
+import com.setarit.quietticketscanner.domain.ScanFile;
+import com.setarit.quietticketscanner.domain.parse.FromJsonParser;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -20,11 +26,13 @@ import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 @EActivity(R.layout.activity_scan_file_loader_controller)
 @Fullscreen
@@ -69,24 +77,36 @@ public class ScanFileLoaderController extends FragmentActivity {
     @Background
     public void loadJson(Uri uri) {
         try {
-            String rawJson = inputStreamToString(new FileInputStream(new File(uri.getPath())));
+            String rawJson = loadFileToString(uri);
+            ScanFile scanFile = parseScanFile(rawJson);
             Log.i("JSON>>>>>>>>", rawJson);
         } catch (FileNotFoundException e) {
             Log.i("INFO", uri.toString());
             Log.e("ERROR", e.getMessage(), e);
             changeLoadingBarTextToFailure();
+        } catch (IOException e) {
+            e.printStackTrace();
+            changeLoadingBarTextToFailure();
         }
     }
 
-    public String inputStreamToString(InputStream inputStream) {
-        try {
-            byte[] bytes = new byte[inputStream.available()];
-            inputStream.read(bytes, 0, bytes.length);
-            String json = new String(bytes);
-            return json;
-        } catch (IOException e) {
-            return null;
+    private ScanFile parseScanFile(String rawJson) {
+        FromJsonParser parser = new FromJsonParser(rawJson);
+        return parser.parse();
+    }
+
+    @NonNull
+    private String loadFileToString(Uri uri) throws IOException {
+        InputStream inputStream = getContentResolver().openInputStream(uri);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        while((line = reader.readLine()) != null){
+            stringBuilder.append(line);
         }
+        inputStream.close();
+        reader.close();
+        return stringBuilder.toString();
     }
 
     @UiThread
