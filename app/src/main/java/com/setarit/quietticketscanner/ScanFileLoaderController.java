@@ -13,9 +13,11 @@ import android.util.Log;
 import android.util.StringBuilderPrinter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.setarit.quietticketscanner.domain.ScanFile;
 import com.setarit.quietticketscanner.domain.parse.FromJsonParser;
+import com.setarit.quietticketscanner.preferences.Preferences_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -25,10 +27,9 @@ import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,6 +42,12 @@ public class ScanFileLoaderController extends FragmentActivity {
 
     @ViewById(R.id.fileLoaderContainer)
     RelativeLayout container;
+    @ViewById
+    TextView eventName;
+
+    @Pref
+    Preferences_ preferences;
+
     private Snackbar loadingSnackbar;
 
     @Override
@@ -51,6 +58,13 @@ public class ScanFileLoaderController extends FragmentActivity {
     @AfterViews
     public void setOpenJsonButtonAsActive(){
         findViewById(R.id.openJsonButton).setBackgroundColor(ContextCompat.getColor(this, R.color.colorActiveButton));
+        if(preferences.eventName().exists()){
+            displayEventName(preferences.eventName().get());
+        }
+    }
+
+    private void displayEventName(String eventName) {
+        this.eventName.setText(eventName);
     }
 
     @Click(R.id.findJsonScanFile)
@@ -78,8 +92,10 @@ public class ScanFileLoaderController extends FragmentActivity {
     public void loadJson(Uri uri) {
         try {
             String rawJson = loadFileToString(uri);
+            preferences.scanFileLocation().put(uri.toString());
             ScanFile scanFile = parseScanFile(rawJson);
-            Log.i("JSON>>>>>>>>", rawJson);
+            preferences.eventName().put(scanFile.getEvent().getName());
+            displayEventNameAndHideSnackbar();
         } catch (FileNotFoundException e) {
             Log.i("INFO", uri.toString());
             Log.e("ERROR", e.getMessage(), e);
@@ -120,5 +136,11 @@ public class ScanFileLoaderController extends FragmentActivity {
     public void changeLoadingBarTextToFailure() {
         loadingSnackbar.setText(R.string.loadingFailed);
         loadingSnackbar.setDuration(Snackbar.LENGTH_SHORT);
+    }
+
+    @UiThread
+    public void displayEventNameAndHideSnackbar() {
+        hideLoadingSnackbar();
+        displayEventName(preferences.eventName().get());
     }
 }

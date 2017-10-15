@@ -29,5 +29,13 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="@string/findJsonFile" />
+
+        <TextView
+            android:id="@+id/eventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/findJsonScanFile"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 </LinearLayout>
