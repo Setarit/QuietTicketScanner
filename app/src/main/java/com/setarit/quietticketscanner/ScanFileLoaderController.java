@@ -2,10 +2,15 @@ package com.setarit.quietticketscanner;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Base64;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +21,7 @@ import com.setarit.quietticketscanner.fragments.loader.DataFragmentLoader;
 import com.setarit.quietticketscanner.preferences.Preferences_;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
@@ -33,6 +39,8 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
     RelativeLayout container;
     @ViewById
     TextView eventName;
+    @ViewById
+    ImageView backgroundImage;
 
     @Pref
     Preferences_ preferences;
@@ -90,6 +98,7 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
         loadingSnackbar = Snackbar.make(container, R.string.loading, Snackbar.LENGTH_INDEFINITE);
         loadingSnackbar.show();
     }
+
     @UiThread
     public void hideLoadingSnackbar(){
         if(loadingSnackbar != null){
@@ -117,6 +126,25 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
         }else{
             dataFragment.setScanFile(scanFileLoader.getLoadingResult());
             displayEventNameAndHideSnackbar();
+            loadEventBackground();
+        }
+    }
+
+    @Background
+    public void loadEventBackground(){
+        String rawImage = dataFragment.getScanFile().getEvent().getImage();
+        String data = rawImage.substring(rawImage.indexOf(",")+1);
+        byte[] decodedString = Base64.decode(data, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        dataFragment.setEventBackground(decodedByte);
+        showEventBackgroundImage();
+    }
+
+    @UiThread
+    public void showEventBackgroundImage() {
+        if(dataFragment.getEventBackground() != null) {
+            backgroundImage.setImageBitmap(dataFragment.getEventBackground());
+            backgroundImage.setScaleType(ImageView.ScaleType.FIT_XY);
         }
     }
 }

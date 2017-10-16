@@ -3,19 +3,14 @@ package com.setarit.quietticketscanner;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import com.setarit.quietticketscanner.async.AsyncScanFileLoader;
 import com.setarit.quietticketscanner.domain.pattern.Observer;
 import com.setarit.quietticketscanner.fragments.DataFragment;
 import com.setarit.quietticketscanner.fragments.loader.DataFragmentLoader;
-import com.setarit.quietticketscanner.permission.CameraPermission;
-import com.setarit.quietticketscanner.permission.PermissionRequestable;
-import com.setarit.quietticketscanner.permission.ReadPermission;
 import com.setarit.quietticketscanner.preferences.Preferences_;
 
 import org.androidannotations.annotations.Background;
@@ -57,7 +52,7 @@ public class LoadingController extends AppCompatActivity implements Observer{
             scanFileLoader.setPreferences(preferences);
             scanFileLoader.loadJson(Uri.parse(preferences.scanFileLocation().get()));
         }else {
-            toScanningCodeActivity();
+            toScanFileLoaderController();
         }
     }
 
@@ -78,8 +73,9 @@ public class LoadingController extends AppCompatActivity implements Observer{
         dialog.show();
     }
 
-    public void toScanningCodeActivity() {
-        startActivity(new Intent(this, ScanFileLoaderController_.class));
+    public void toScanFileLoaderController() {
+        Intent intent = new Intent(this, ScanFileLoaderController_.class);
+        startActivity(intent);
         finish();
     }
 
@@ -92,6 +88,6 @@ public class LoadingController extends AppCompatActivity implements Observer{
         if(scanFileLoader.getLoadingResult() != null){
             dataFragment.setScanFile(scanFileLoader.getLoadingResult());
         }
-        toScanningCodeActivity();
+        toScanFileLoaderController();
     }
 }

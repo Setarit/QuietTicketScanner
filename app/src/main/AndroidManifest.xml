@@ -47,7 +47,8 @@
             android:name=".ticket.InvalidTicketController"
             android:screenOrientation="portrait" />
         <activity android:name=".InfoController" />
-        <activity android:name=".ScanFileLoaderController_"/>
+        <activity android:name=".ScanFileLoaderController_"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

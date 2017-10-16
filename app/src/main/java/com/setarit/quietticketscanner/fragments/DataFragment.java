@@ -1,5 +1,6 @@
 package com.setarit.quietticketscanner.fragments;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
@@ -13,6 +14,7 @@ import com.setarit.quietticketscanner.domain.ScanFile;
 
 public class DataFragment extends Fragment {
     private ScanFile scanFile;
+    private Bitmap eventBackground;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,5 +28,13 @@ public class DataFragment extends Fragment {
 
     public void setScanFile(ScanFile scanFile) {
         this.scanFile = scanFile;
+    }
+
+    public Bitmap getEventBackground() {
+        return eventBackground;
+    }
+
+    public void setEventBackground(Bitmap eventBackground) {
+        this.eventBackground = eventBackground;
     }
 }
