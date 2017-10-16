@@ -2,41 +2,27 @@ package com.setarit.quietticketscanner;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.util.StringBuilderPrinter;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.setarit.quietticketscanner.async.AsyncScanFileLoader;
-import com.setarit.quietticketscanner.domain.ScanFile;
-import com.setarit.quietticketscanner.domain.parse.FromJsonParser;
 import com.setarit.quietticketscanner.domain.pattern.Observer;
+import com.setarit.quietticketscanner.fragments.DataFragment;
+import com.setarit.quietticketscanner.fragments.loader.DataFragmentLoader;
 import com.setarit.quietticketscanner.preferences.Preferences_;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.OnActivityResult;
-import org.androidannotations.annotations.SupposeBackground;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 @EActivity(R.layout.activity_scan_file_loader_controller)
 @Fullscreen
@@ -53,6 +39,7 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
 
     private Snackbar loadingSnackbar;
     private AsyncScanFileLoader scanFileLoader;
+    private DataFragment dataFragment;
 
     public ScanFileLoaderController() {
         scanFileLoader = new AsyncScanFileLoader(this);
@@ -62,6 +49,12 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadDataFragment();
+    }
+
+    private void loadDataFragment() {
+        DataFragmentLoader loader = new DataFragmentLoader(getFragmentManager());
+        dataFragment = loader.loadDataFragment();
     }
 
     @AfterViews
@@ -90,7 +83,6 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
             showLoadingSnackbar();
             scanFileLoader.setPreferences(preferences);
             scanFileLoader.loadJson(data.getData());
-            //loadJson(data.getData());
         }
     }
 
@@ -98,41 +90,6 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
         loadingSnackbar = Snackbar.make(container, R.string.loading, Snackbar.LENGTH_INDEFINITE);
         loadingSnackbar.show();
     }
-
-    /*@Background
-    public void loadJson(Uri uri) {
-        try {
-            String rawJson = loadFileToString(uri);
-            preferences.scanFileLocation().put(uri.toString());
-            ScanFile scanFile = parseScanFile(rawJson);
-            preferences.eventName().put(scanFile.getEvent().getName());
-            displayEventNameAndHideSnackbar();
-        } catch (IOException e) {
-            changeLoadingBarTextToFailure();
-        }
-    }
-
-    @SupposeBackground
-    public ScanFile parseScanFile(String rawJson) {
-        FromJsonParser parser = new FromJsonParser(rawJson);
-        return parser.parse();
-    }
-
-    @NonNull
-    @SupposeBackground
-    public String loadFileToString(Uri uri) throws IOException {
-        InputStream inputStream = getContentResolver().openInputStream(uri);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder stringBuilder = new StringBuilder();
-        String line;
-        while((line = reader.readLine()) != null){
-            stringBuilder.append(line);
-        }
-        inputStream.close();
-        reader.close();
-        return stringBuilder.toString();
-    }*/
-
     @UiThread
     public void hideLoadingSnackbar(){
         if(loadingSnackbar != null){
@@ -158,6 +115,7 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
         if(this.scanFileLoader.getLoadingResult() == null){
             changeLoadingBarTextToFailure();
         }else{
+            dataFragment.setScanFile(scanFileLoader.getLoadingResult());
             displayEventNameAndHideSnackbar();
         }
     }

@@ -28,7 +28,7 @@ public class AsyncServerConnectionChecker extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void v) {
         if(networkStateChecker.isConnectedWithServer()){
-            controller.loadingCompleted();
+            controller.toScanningCodeActivity();
         }else {
             controller.showNoNetworkConnectionDialog();
         }
