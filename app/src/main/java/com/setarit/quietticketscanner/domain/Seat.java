@@ -1,11 +1,13 @@
 package com.setarit.quietticketscanner.domain;
 
+import java.io.Serializable;
+
 /**
  * Created by Setarit on 13/10/2017.
  * Contains the info of the seat
  */
 
-public class Seat {
+public class Seat implements Serializable {
     private String name;
     private boolean scanned;
     private String priceName;

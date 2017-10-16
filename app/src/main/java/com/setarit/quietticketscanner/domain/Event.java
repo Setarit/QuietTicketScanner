@@ -1,11 +1,13 @@
 package com.setarit.quietticketscanner.domain;
 
+import java.io.Serializable;
+
 /**
  * Created by Setarit on 13/10/2017.
  * Model for the event
  */
 
-public class Event {
+public class Event implements Serializable {
     private String id;
     private String name;
     private String image;

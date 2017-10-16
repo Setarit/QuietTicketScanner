@@ -15,8 +15,10 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.setarit.quietticketscanner.async.AsyncScanFileLoader;
 import com.setarit.quietticketscanner.domain.ScanFile;
 import com.setarit.quietticketscanner.domain.parse.FromJsonParser;
+import com.setarit.quietticketscanner.domain.pattern.Observer;
 import com.setarit.quietticketscanner.preferences.Preferences_;
 
 import org.androidannotations.annotations.AfterViews;
@@ -25,6 +27,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.OnActivityResult;
+import org.androidannotations.annotations.SupposeBackground;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
@@ -37,7 +40,7 @@ import java.io.InputStreamReader;
 
 @EActivity(R.layout.activity_scan_file_loader_controller)
 @Fullscreen
-public class ScanFileLoaderController extends FragmentActivity {
+public class ScanFileLoaderController extends FragmentActivity implements Observer {
     private static final int OPEN_SCAN_FILE = 1;
 
     @ViewById(R.id.fileLoaderContainer)
@@ -49,6 +52,12 @@ public class ScanFileLoaderController extends FragmentActivity {
     Preferences_ preferences;
 
     private Snackbar loadingSnackbar;
+    private AsyncScanFileLoader scanFileLoader;
+
+    public ScanFileLoaderController() {
+        scanFileLoader = new AsyncScanFileLoader(this);
+        scanFileLoader.addObserver(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +88,9 @@ public class ScanFileLoaderController extends FragmentActivity {
     public void fileSelected(int resultCode, Intent data){
         if(resultCode == Activity.RESULT_OK){
             showLoadingSnackbar();
-            loadJson(data.getData());
+            scanFileLoader.setPreferences(preferences);
+            scanFileLoader.loadJson(data.getData());
+            //loadJson(data.getData());
         }
     }
 
@@ -88,7 +99,7 @@ public class ScanFileLoaderController extends FragmentActivity {
         loadingSnackbar.show();
     }
 
-    @Background
+    /*@Background
     public void loadJson(Uri uri) {
         try {
             String rawJson = loadFileToString(uri);
@@ -96,23 +107,20 @@ public class ScanFileLoaderController extends FragmentActivity {
             ScanFile scanFile = parseScanFile(rawJson);
             preferences.eventName().put(scanFile.getEvent().getName());
             displayEventNameAndHideSnackbar();
-        } catch (FileNotFoundException e) {
-            Log.i("INFO", uri.toString());
-            Log.e("ERROR", e.getMessage(), e);
-            changeLoadingBarTextToFailure();
         } catch (IOException e) {
-            e.printStackTrace();
             changeLoadingBarTextToFailure();
         }
     }
 
-    private ScanFile parseScanFile(String rawJson) {
+    @SupposeBackground
+    public ScanFile parseScanFile(String rawJson) {
         FromJsonParser parser = new FromJsonParser(rawJson);
         return parser.parse();
     }
 
     @NonNull
-    private String loadFileToString(Uri uri) throws IOException {
+    @SupposeBackground
+    public String loadFileToString(Uri uri) throws IOException {
         InputStream inputStream = getContentResolver().openInputStream(uri);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         StringBuilder stringBuilder = new StringBuilder();
@@ -123,7 +131,7 @@ public class ScanFileLoaderController extends FragmentActivity {
         inputStream.close();
         reader.close();
         return stringBuilder.toString();
-    }
+    }*/
 
     @UiThread
     public void hideLoadingSnackbar(){
@@ -142,5 +150,15 @@ public class ScanFileLoaderController extends FragmentActivity {
     public void displayEventNameAndHideSnackbar() {
         hideLoadingSnackbar();
         displayEventName(preferences.eventName().get());
+    }
+
+    @Override
+    @UiThread
+    public void update() {
+        if(this.scanFileLoader.getLoadingResult() == null){
+            changeLoadingBarTextToFailure();
+        }else{
+            displayEventNameAndHideSnackbar();
+        }
     }
 }

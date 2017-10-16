@@ -7,7 +7,7 @@ import org.androidannotations.annotations.sharedpreferences.SharedPref;
  * Contains the specification of the shared preferences
  */
 
-@SharedPref
+@SharedPref(value=SharedPref.Scope.UNIQUE)
 public interface Preferences {
     String scanFileLocation();
     String eventName();

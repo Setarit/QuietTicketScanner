@@ -1,5 +1,6 @@
 package com.setarit.quietticketscanner.domain;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Collection;
  * Wrapper of the scan file contents
  */
 
-public class ScanFile {
+public class ScanFile implements Serializable{
     private Event event;
     private Collection<Visitor> visitors;
 

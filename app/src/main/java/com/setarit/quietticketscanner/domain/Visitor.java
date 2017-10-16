@@ -1,5 +1,6 @@
 package com.setarit.quietticketscanner.domain;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Collection;
  * Visitor object
  */
 
-public class Visitor {
+public class Visitor implements Serializable {
     private String id;
     private String firstName;
     private String lastName;
