@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
 
     <application
         android:name="android.support.multidex.MultiDexApplication"
@@ -28,12 +28,15 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".InfoController" />
-        <activity android:name=".ScanFileLoaderController_"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".ScanFileLoaderController_"
+            android:screenOrientation="landscape" />
+        <activity android:name=".ScanController_" android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

@@ -7,7 +7,7 @@
     <string name="continue_scanning">Continuer</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY</string>
-    <string name="insufficientCameraPermissions">L\'application n\'a pas accès à la caméra. Vous devez relancer l\'application et donner l\'accès à la caméra</string>
+    <string name="insufficientCameraPermissions">L\'application n\'a pas accès à la caméra. Veuillez choisir \'Autoriser\' dans la dialogue d\'autorisation suivante.</string>
     <string name="insufficientPermissions">Autorisations insuffisantes</string>
     <string name="network">Réseau</string>
     <string name="scan">Lire</string>

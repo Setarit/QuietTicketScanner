@@ -12,7 +12,7 @@
     <string name="scan">Scan</string>
     <string name="camera">Camera</string>
     <string name="insufficientPermissions">Insufficient Permissions</string>
-    <string name="insufficientCameraPermissions">The app has no permission to access the camera. Please restart the app and allow camera access</string>
+    <string name="insufficientCameraPermissions">The app has no permission to access the camera. Please choose allow in the following permission dialog.</string>
     <string name="useFlashLight">Use Flashlight</string>
     <string name="useFrontCamera">Use Front Camera</string>
     <string name="continue_scanning">Continue Scanning</string>
@@ -35,4 +35,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <string name="loading">Loading</string>
     <string name="loadingFailed">Loading failed</string>
     <string name="insufficientStorageReadPermissions">The app has no permission to read from the storage. Please restart the app and allow storage access</string>
+    <string name="ok">Ok</string>
 </resources>
