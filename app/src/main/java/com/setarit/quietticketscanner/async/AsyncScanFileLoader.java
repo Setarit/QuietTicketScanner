@@ -3,9 +3,11 @@ package com.setarit.quietticketscanner.async;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.setarit.quietticketscanner.domain.ScanFile;
 import com.setarit.quietticketscanner.domain.parse.FromJsonParser;
+import com.setarit.quietticketscanner.domain.parse.VistorsToJsonParser;
 import com.setarit.quietticketscanner.domain.pattern.Subject;
 import com.setarit.quietticketscanner.preferences.Preferences_;
 
@@ -32,6 +34,7 @@ public class AsyncScanFileLoader extends Subject {
 
     private Context context;
     private ScanFile loadingResult;
+    private String visitorsAsJsonString;
 
     public AsyncScanFileLoader(Context context) {
         this.context = context;
@@ -46,6 +49,7 @@ public class AsyncScanFileLoader extends Subject {
         try {
             String rawJson = loadFileToString(uri);
             loadingResult = parseScanFile(rawJson);
+            visitorsAsJsonString = convertVisitorsToJson();
             savePreferences(uri);
             this.notifyObservers();
         } catch (IOException e) {
@@ -53,10 +57,15 @@ public class AsyncScanFileLoader extends Subject {
         }
     }
 
-    private void savePreferences(Uri uri) {
+
+
+    @SupposeBackground
+    public void savePreferences(Uri uri) {
         preferences.scanFileLocation().put(uri.toString());
         preferences.eventName().put(loadingResult.getEvent().getName());
         preferences.imageBase64().put(loadingResult.getEvent().getImage());
+        preferences.eventId().put(loadingResult.getEvent().getId());
+        preferences.visitorsJson().put(visitorsAsJsonString);
     }
 
     @SupposeBackground
@@ -78,6 +87,12 @@ public class AsyncScanFileLoader extends Subject {
         inputStream.close();
         reader.close();
         return stringBuilder.toString();
+    }
+
+    @SupposeBackground
+    public String convertVisitorsToJson() {
+        VistorsToJsonParser parser = new VistorsToJsonParser(loadingResult.getVisitors());
+        return parser.convertToJson();
     }
 
     /**
