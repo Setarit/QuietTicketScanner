@@ -31,21 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".TokenController"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".ScanController"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".ticket.ValidTicketController"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".ticket.TicketAlreadyScannedController"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".ticket.InvalidTicketController"
-            android:screenOrientation="landscape" />
         <activity android:name=".InfoController" />
         <activity android:name=".ScanFileLoaderController_"
             android:screenOrientation="landscape"/>
