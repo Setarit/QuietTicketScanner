@@ -1,5 +1,7 @@
 package com.setarit.quietticketscanner.domain;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 /**
@@ -8,8 +10,11 @@ import java.io.Serializable;
  */
 
 public class Seat implements Serializable {
+    @Expose
     private String name;
+    @Expose
     private boolean scanned;
+    @Expose
     private String priceName;
 
     public Seat(String name, boolean scanned, String priceName) {

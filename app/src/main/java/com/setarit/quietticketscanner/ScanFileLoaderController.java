@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.setarit.quietticketscanner.async.AsyncScanFileLoader;
+import com.setarit.quietticketscanner.domain.ScanFile;
 import com.setarit.quietticketscanner.domain.pattern.Observer;
 import com.setarit.quietticketscanner.fragments.DataFragment;
 import com.setarit.quietticketscanner.fragments.loader.DataFragmentLoader;
@@ -70,6 +71,9 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
         findViewById(R.id.openJsonButton).setBackgroundColor(ContextCompat.getColor(this, R.color.colorActiveButton));
         if(preferences.eventName().exists()){
             displayEventName(preferences.eventName().get());
+        }
+        if(preferences.imageBase64().exists()){
+            loadEventBackground();
         }
     }
 
@@ -132,7 +136,7 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
 
     @Background
     public void loadEventBackground(){
-        String rawImage = dataFragment.getScanFile().getEvent().getImage();
+        String rawImage = preferences.imageBase64().get();
         String data = rawImage.substring(rawImage.indexOf(",")+1);
         byte[] decodedString = Base64.decode(data, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

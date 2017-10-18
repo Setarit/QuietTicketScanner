@@ -45,13 +45,18 @@ public class AsyncScanFileLoader extends Subject {
     public void loadJson(Uri uri) {
         try {
             String rawJson = loadFileToString(uri);
-            preferences.scanFileLocation().put(uri.toString());
             loadingResult = parseScanFile(rawJson);
-            preferences.eventName().put(loadingResult.getEvent().getName());
+            savePreferences(uri);
             this.notifyObservers();
         } catch (IOException e) {
             this.notifyObservers();
         }
+    }
+
+    private void savePreferences(Uri uri) {
+        preferences.scanFileLocation().put(uri.toString());
+        preferences.eventName().put(loadingResult.getEvent().getName());
+        preferences.imageBase64().put(loadingResult.getEvent().getImage());
     }
 
     @SupposeBackground

@@ -1,5 +1,7 @@
 package com.setarit.quietticketscanner.domain;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 /**
@@ -8,8 +10,11 @@ import java.io.Serializable;
  */
 
 public class Event implements Serializable {
+    @Expose
     private String id;
+    @Expose
     private String name;
+    @Expose(serialize = false)
     private String image;
 
     public Event(String id, String name, String image) {

@@ -11,4 +11,5 @@ import org.androidannotations.annotations.sharedpreferences.SharedPref;
 public interface Preferences {
     String scanFileLocation();
     String eventName();
+    String imageBase64();
 }

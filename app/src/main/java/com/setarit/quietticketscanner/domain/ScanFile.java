@@ -1,5 +1,7 @@
 package com.setarit.quietticketscanner.domain;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -9,7 +11,9 @@ import java.util.Collection;
  */
 
 public class ScanFile implements Serializable{
+    @Expose
     private Event event;
+    @Expose
     private Collection<Visitor> visitors;
 
     public ScanFile(Event event, Collection<Visitor> visitors) {

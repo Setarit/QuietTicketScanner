@@ -25,7 +25,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoadingController_"
-            android:screenOrientation="portrait">
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -33,19 +33,19 @@
         </activity>
         <activity
             android:name=".TokenController"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ScanController"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ticket.ValidTicketController"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ticket.TicketAlreadyScannedController"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ticket.InvalidTicketController"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="landscape" />
         <activity android:name=".InfoController" />
         <activity android:name=".ScanFileLoaderController_"
             android:screenOrientation="landscape"/>

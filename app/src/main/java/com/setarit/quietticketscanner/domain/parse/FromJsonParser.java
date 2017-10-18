@@ -19,7 +19,7 @@ public class FromJsonParser {
         gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(Boolean.class, new BooleanTypeAdapter());
         gsonBuilder.registerTypeAdapter(boolean.class, new BooleanTypeAdapter());
-        gson = gsonBuilder.create();
+        gson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
         this.rawJson = rawJson;
     }
 
