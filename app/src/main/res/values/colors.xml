@@ -6,7 +6,7 @@
     <color name="colorErrorMessage">#B13D3D</color>
     <color name="colorSuccessMessage">#50A761</color>
     <color name="colorWarningMessage">#DA9F69</color>
-    <color name="colorActiveButton">#B6B6D6</color>
+    <color name="colorActiveButton">#b6b6d6</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>
