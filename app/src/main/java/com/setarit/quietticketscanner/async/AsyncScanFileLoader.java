@@ -69,6 +69,7 @@ public class AsyncScanFileLoader extends Subject {
         preferences.imageBase64().put(loadingResult.getEvent().getImage());
         preferences.eventId().put(loadingResult.getEvent().getId());
         preferences.visitorsJson().put(visitorsAsJsonString);
+        preferences.hasScanned().put(false);
     }
 
     @SupposeBackground

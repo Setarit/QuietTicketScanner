@@ -4,7 +4,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraManager;
+import android.os.Build;
+import android.os.Parcel;
 import android.os.PersistableBundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -139,8 +143,26 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
 
     @Override
     public void handleResult(Result result) {
-        Log.i("FOUND>>>", result.getText());
-        scanningView.resumeCameraPreview(this);
+        if(result.getText().startsWith("SQT-")){
+            vibrate();
+            checkCode();
+        }else {
+            scanningView.resumeCameraPreview(this);
+        }
+    }
+
+    private void checkCode() {
+
+    }
+
+    private void vibrate() {
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.O){
+            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        }else{
+            vibrator.vibrate(500);
+        }
+
     }
 
     //Todo: sound, verify result, stay active

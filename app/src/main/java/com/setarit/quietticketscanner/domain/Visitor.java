@@ -80,4 +80,19 @@ public class Visitor implements Serializable {
     public void setSeats(Collection<Seat> seats) {
         this.seats = seats;
     }
+
+    public void setAllSeatsScanned(){
+        for (Seat seat: seats){
+            seat.setScanned(true);
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean equal = false;
+        if(obj instanceof Visitor){
+            equal = ((Visitor) obj).getId().equals(this.getId());
+        }
+        return equal;
+    }
 }

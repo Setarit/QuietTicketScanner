@@ -14,4 +14,5 @@ public interface Preferences {
     String eventId();
     String imageBase64();
     String visitorsJson();
+    boolean hasScanned();
 }
