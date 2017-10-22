@@ -5,7 +5,6 @@ import com.setarit.quietticketscanner.domain.Visitor;
 import com.setarit.quietticketscanner.preferences.Preferences_;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Created by Setarit on 22/10/2017.
@@ -35,28 +34,32 @@ public class SeatCodeValidator extends CodeValidator {
         Seat seat = seats.get(code);
         if(seat != null){
             if(seat.isScanned()){
-                scanStatus = ScanStatus.VALID;
-                updateHasScannedInPreferences();
-                Visitor visitor = findVisitorOfSeat(seat);
-                Seat visitorSeat = null;
-                Iterator<Seat> seatIterator = visitor.getSeats().iterator();
-                while (seatIterator.hasNext()){
-                    Seat current = seatIterator.next();
-                    if(current.equals(seat)){
-                        visitorSeat = seat;
-                        break;
-                    }
-                }
-                visitorSeat.setScanned(true);
-                visitor.setWent(true);
-                updateVisitorList(visitor);
+                handleValidCode(seat);
+                valid = true;
             }else {
                 scanStatus = ScanStatus.ALREADY_SCANNED;
             }
         }else{
             scanStatus = ScanStatus.INVALID;
         }
-        return false;
+        return valid;
+    }
+
+    private void handleValidCode(Seat seat) {
+        scanStatus = ScanStatus.VALID;
+        updateHasScannedInPreferences();
+        Visitor visitor = findVisitorOfSeat(seat);
+        Seat visitorSeat = null;
+        for (Seat current : visitor.getSeats()) {
+            if (current.equals(seat)) {
+                visitorSeat = seat;
+                break;
+            }
+        }
+        if(visitorSeat != null) {
+            visitorSeat.setScanned(true);
+            updateVisitorList(visitor);
+        }
     }
 
     private Visitor findVisitorOfSeat(Seat seat) {

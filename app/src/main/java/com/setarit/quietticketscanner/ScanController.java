@@ -22,11 +22,17 @@ import com.google.zxing.Result;
 import com.setarit.quietticketscanner.camera.Camera;
 import com.setarit.quietticketscanner.permission.CameraPermission;
 import com.setarit.quietticketscanner.permission.PermissionRequestable;
+import com.setarit.quietticketscanner.preferences.Preferences_;
+import com.setarit.quietticketscanner.ticket.CodeValidator;
+import com.setarit.quietticketscanner.ticket.SeatCodeValidator;
+import com.setarit.quietticketscanner.ticket.VisitorCodeValidator;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +46,10 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
     private int currentCameraId = -1;
     private boolean useFlash;
     private boolean hasFlash;
+    private CodeValidator seatCodeValidator, visitorCodeValidator;
+
+    @Pref
+    public Preferences_ preferences;
 
     private Camera camera;
 
@@ -50,9 +60,16 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadValidators();
         verifyCameraPermission();
         this.camera = new Camera((CameraManager) getSystemService(Context.CAMERA_SERVICE));
         hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+    }
+
+    @Background
+    public void loadValidators() {
+        seatCodeValidator = new SeatCodeValidator(preferences);
+        visitorCodeValidator = new VisitorCodeValidator(preferences);
     }
 
     @Override
@@ -145,14 +162,27 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
     public void handleResult(Result result) {
         if(result.getText().startsWith("SQT-")){
             vibrate();
-            checkCode();
-        }else {
-            scanningView.resumeCameraPreview(this);
+            checkCode(result.getText().substring(4));
         }
+        scanningView.resumeCameraPreview(this);
     }
 
-    private void checkCode() {
-
+    /**
+     * Checks the code and starts the appropriate activity to show the result
+     * @param code The code to verify
+     */
+    private void checkCode(String code) {
+        Log.i("CODE>>>>>", code);
+        boolean isVisitorCode = false;
+        try{
+            Long.parseLong(code);
+            isVisitorCode = true;
+            visitorCodeValidator.isValid(code);
+        }catch (NumberFormatException exception){
+            seatCodeValidator.isValid(code);
+        }finally {
+            //TODO: show validation result;
+        }
     }
 
     private void vibrate() {
@@ -165,5 +195,5 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
 
     }
 
-    //Todo: sound, verify result, stay active
+    //Todo: sound
 }

@@ -6,7 +6,7 @@ import com.setarit.quietticketscanner.preferences.Preferences_;
 import java.util.HashMap;
 
 /**
- * Created by Jasper on 22/10/2017.
+ * Created by Setarit on 22/10/2017.
  * Validates the global ticket code
  */
 
