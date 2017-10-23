@@ -2,7 +2,6 @@ package com.setarit.quietticketscanner.ticket;
 
 import com.setarit.quietticketscanner.domain.Seat;
 import com.setarit.quietticketscanner.domain.Visitor;
-import com.setarit.quietticketscanner.preferences.Preferences_;
 
 import java.util.HashMap;
 
@@ -13,11 +12,13 @@ import java.util.HashMap;
 
 public class SeatCodeValidator extends CodeValidator {
     private HashMap<String, Seat> seats;
+    private Seat lastScannedSeat;
 
-    public SeatCodeValidator(Preferences_ preferences) {
-        super(preferences);
+    public SeatCodeValidator(String visitorJson) {
+        super(visitorJson);
         loadSeatsToMap();
     }
+
 
     private void loadSeatsToMap() {
         this.seats = new HashMap<String, Seat>();
@@ -47,7 +48,8 @@ public class SeatCodeValidator extends CodeValidator {
 
     private void handleValidCode(Seat seat) {
         scanStatus = ScanStatus.VALID;
-        updateHasScannedInPreferences();
+        lastScannedSeat = seat;
+        updateHasScanned();
         Visitor visitor = findVisitorOfSeat(seat);
         Seat visitorSeat = null;
         for (Seat current : visitor.getSeats()) {
@@ -57,6 +59,7 @@ public class SeatCodeValidator extends CodeValidator {
             }
         }
         if(visitorSeat != null) {
+            lastScannedVisitor = visitor;
             visitorSeat.setScanned(true);
             updateVisitorList(visitor);
         }
@@ -71,5 +74,9 @@ public class SeatCodeValidator extends CodeValidator {
             }
         }
         return foundVisitor;
+    }
+
+    public Seat getLastScannedSeat() {
+        return lastScannedSeat;
     }
 }

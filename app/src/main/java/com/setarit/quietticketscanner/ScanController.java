@@ -2,6 +2,7 @@ package com.setarit.quietticketscanner;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
@@ -20,6 +21,8 @@ import android.widget.RelativeLayout;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.setarit.quietticketscanner.camera.Camera;
+import com.setarit.quietticketscanner.domain.Visitor;
+import com.setarit.quietticketscanner.domain.parse.VistorsToJsonParser;
 import com.setarit.quietticketscanner.permission.CameraPermission;
 import com.setarit.quietticketscanner.permission.PermissionRequestable;
 import com.setarit.quietticketscanner.preferences.Preferences_;
@@ -68,8 +71,8 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
 
     @Background
     public void loadValidators() {
-        seatCodeValidator = new SeatCodeValidator(preferences);
-        visitorCodeValidator = new VisitorCodeValidator(preferences);
+        seatCodeValidator = new SeatCodeValidator(preferences.visitorsJson().get());
+        visitorCodeValidator = new VisitorCodeValidator(preferences.visitorsJson().get());
     }
 
     @Override
@@ -162,7 +165,7 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
     public void handleResult(Result result) {
         if(result.getText().startsWith("SQT-")){
             vibrate();
-            checkCode(result.getText().substring(4));
+            checkCode(result.getText().substring(4).replaceAll("-",""));
         }
         scanningView.resumeCameraPreview(this);
     }
@@ -178,11 +181,41 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
             Long.parseLong(code);
             isVisitorCode = true;
             visitorCodeValidator.isValid(code);
+            updateCurrentScanStatusToPreferences(visitorCodeValidator.getVisitors(), visitorCodeValidator.hasScanned());
         }catch (NumberFormatException exception){
             seatCodeValidator.isValid(code);
+            updateCurrentScanStatusToPreferences(seatCodeValidator.getVisitors(), seatCodeValidator.hasScanned());
         }finally {
-            //TODO: show validation result;
+            startScanResultActivity(isVisitorCode);
         }
+    }
+
+    @Background
+    public void updateCurrentScanStatusToPreferences(List<Visitor> updatedVisitors, boolean hasScanned) {
+        updateVisitorsJsonInPreferences(updatedVisitors);
+        preferences.hasScanned().put(hasScanned);
+    }
+
+    /**
+     * Updates the visitor JSON in the preferences
+     */
+    private void updateVisitorsJsonInPreferences(List<Visitor> visitors){
+        VistorsToJsonParser parser = new VistorsToJsonParser(visitors);
+        String visitorsAsString = parser.convertToJson();
+        preferences.visitorsJson().put(visitorsAsString);
+    }
+
+    private void startScanResultActivity(boolean isVisitorCode) {
+        Intent intent = null;
+        if(isVisitorCode){
+            intent = new Intent(this, VisitorScanResultController_.class);
+            intent.putExtra("VALIDATOR", visitorCodeValidator);
+        }else{
+            intent = new Intent(this, SeatScanResultController_.class);
+            intent.putExtra("VALIDATOR", seatCodeValidator);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
     }
 
     private void vibrate() {

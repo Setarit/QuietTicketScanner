@@ -36,4 +36,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <string name="loadingFailed">Loading failed</string>
     <string name="insufficientStorageReadPermissions">The app has no permission to read from the storage. Please restart the app and allow storage access</string>
     <string name="ok">Ok</string>
+    <string name="ticketAlreadyScanned">The ticket has already been scanned</string>
+    <string name="ticketInvalid">Ticket unknown</string>
+    <string name="ticketValid">Valid</string>
 </resources>

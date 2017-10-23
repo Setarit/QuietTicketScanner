@@ -13,10 +13,11 @@ import java.util.HashMap;
 public class VisitorCodeValidator extends CodeValidator {
     private HashMap<Long, Visitor> visitorMap;
 
-    public VisitorCodeValidator(Preferences_ preferences) {
-        super(preferences);
+    public VisitorCodeValidator(String visitorJson) {
+        super(visitorJson);
         mapToHashMap();
     }
+
 
     private void mapToHashMap() {
         this.visitorMap = new HashMap<Long, Visitor>(visitors.size());
@@ -47,6 +48,7 @@ public class VisitorCodeValidator extends CodeValidator {
         visitor.setAllSeatsScanned();
         updateVisitorList(visitor);
         scanStatus = ScanStatus.VALID;
-        updateHasScannedInPreferences();
+        lastScannedVisitor = visitor;
+        updateHasScanned();
     }
 }

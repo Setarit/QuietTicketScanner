@@ -5,6 +5,7 @@ import com.setarit.quietticketscanner.domain.parse.VisitorsFromJsonParser;
 import com.setarit.quietticketscanner.domain.parse.VistorsToJsonParser;
 import com.setarit.quietticketscanner.preferences.Preferences_;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,37 +13,23 @@ import java.util.List;
  * Verifies if a ticket or vistor is valid
  */
 
-public abstract class CodeValidator implements TicketValidatable {
-    private Preferences_ preferences;
+public abstract class CodeValidator implements TicketValidatable, Serializable {    
     protected List<Visitor> visitors;
     protected ScanStatus scanStatus;
+    protected Visitor lastScannedVisitor;
+    private boolean hasScanned;
 
 
-    public CodeValidator(Preferences_ preferences) {
-        this.preferences = preferences;
-        loadVisitors();
-    }
-
-    private void loadVisitors() {
-        VisitorsFromJsonParser parser = new VisitorsFromJsonParser(preferences.visitorsJson().get());
+    public CodeValidator(String visitorJson) {
+        VisitorsFromJsonParser parser = new VisitorsFromJsonParser(visitorJson);
         this.visitors = parser.convertFromJson();
-    }
-
-
-    /**
-     * Updates the visitor JSON in the preferences
-     */
-    protected void updateVisitorsJsonInPreferences(){
-        VistorsToJsonParser parser = new VistorsToJsonParser(visitors);
-        String visitorsAsString = parser.convertToJson();
-        preferences.visitorsJson().put(visitorsAsString);
     }
 
     /**
      * Updates the hasScanned flag in the preferences
      */
-    protected void updateHasScannedInPreferences(){
-        preferences.hasScanned().put(true);
+    protected void updateHasScanned(){
+        this.hasScanned = true;
     }
 
     /**
@@ -55,11 +42,16 @@ public abstract class CodeValidator implements TicketValidatable {
         visitors.set(updateIndex, visitor);
     }
 
-    protected void updateScanStatus(ScanStatus scanStatus){
-        this.scanStatus = scanStatus;
-    }
-
     public ScanStatus getLastScanStatus(){
         return this.scanStatus;
+    }
+    public Visitor getLastScannedVisitor() {return this.lastScannedVisitor; }
+
+    public boolean hasScanned() {
+        return hasScanned;
+    }
+
+    public List<Visitor> getVisitors() {
+        return visitors;
     }
 }

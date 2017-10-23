@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 
 import com.setarit.quietticketscanner.R;
 import com.setarit.quietticketscanner.ScanController_;
-import com.setarit.quietticketscanner.ScanFileLoaderController;
 import com.setarit.quietticketscanner.ScanFileLoaderController_;
 import com.setarit.quietticketscanner.preferences.Preferences_;
 
