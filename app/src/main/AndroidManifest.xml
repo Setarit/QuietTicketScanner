@@ -39,8 +39,13 @@
         <activity
             android:name=".ScanController_"
             android:screenOrientation="landscape" />
-        <activity android:name=".VisitorScanResultController_" android:screenOrientation="landscape" />
-        <activity android:name=".SeatScanResultController_" android:screenOrientation="landscape"/>
+        <activity
+            android:name=".VisitorScanResultController_"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".SeatScanResultController_"
+            android:screenOrientation="landscape" />
+        <activity android:name=".CodeController_"/>
     </application>
 
 </manifest>

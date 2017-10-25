@@ -39,4 +39,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <string name="ticketAlreadyScanned">The ticket has already been scanned</string>
     <string name="ticketInvalid">Ticket unknown</string>
     <string name="ticketValid">Valid</string>
+    <string name="code">Code</string>
 </resources>

@@ -32,6 +32,7 @@ import com.setarit.quietticketscanner.ticket.VisitorCodeValidator;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
@@ -229,4 +230,11 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
     }
 
     //Todo: sound
+
+    @Click(R.id.openKeyboard)
+    public void openCodeActivity(){
+        Intent intent = new Intent(this, CodeController_.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+    }
 }
