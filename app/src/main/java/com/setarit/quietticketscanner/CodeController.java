@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.setarit.quietticketscanner.preferences.Preferences_;
-import com.setarit.quietticketscanner.ticket.SeatCodeValidator;
-import com.setarit.quietticketscanner.ticket.VisitorCodeValidator;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -28,8 +26,6 @@ public class CodeController extends AppCompatActivity {
 
     @Pref
     public Preferences_ preferences;
-    private SeatCodeValidator seatCodeValidator;
-    private VisitorCodeValidator visitorCodeValidator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +35,6 @@ public class CodeController extends AppCompatActivity {
 
     @Background
     public void loadValidators() {
-        seatCodeValidator = new SeatCodeValidator(preferences.visitorsJson().get());
-        visitorCodeValidator = new VisitorCodeValidator(preferences.visitorsJson().get());
     }
 
     @Click(R.id.returnToScanActivity)
@@ -69,26 +63,6 @@ public class CodeController extends AppCompatActivity {
     }
 
     private void verifyCode() {//TODO: extract reusable class
-        String rawCode = code.getText().toString();
-        if(rawCode.startsWith("SQT-")){
-            rawCode = rawCode.substring(4);
-        }
-        boolean isSeatCode = true;
-        try{
-            Long.parseLong(rawCode);
-            isSeatCode = false;
-            visitorCodeValidator.isValid(rawCode);
-        }catch (NumberFormatException e){
-            seatCodeValidator.isValid(rawCode);
-        }finally {
-            Intent intent = null;
-            if(isSeatCode){
-                intent = new Intent(this, SeatScanResultController_.class);
-            }else{
-                intent = new Intent(this, VisitorScanResultController_.class);
-            }
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intent);
-        }
+
     }
 }

@@ -15,6 +15,6 @@ public interface Preferences extends Serializable {
     String eventName();
     String eventId();
     String imageBase64();
-    String visitorsJson();
+    String seatsJson();
     boolean hasScanned();
 }

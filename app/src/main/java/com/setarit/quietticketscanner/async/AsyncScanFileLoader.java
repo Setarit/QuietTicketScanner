@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.setarit.quietticketscanner.domain.ScanFile;
 import com.setarit.quietticketscanner.domain.parse.FromJsonParser;
+import com.setarit.quietticketscanner.domain.parse.SeatsToJsonParser;
 import com.setarit.quietticketscanner.domain.parse.VistorsToJsonParser;
 import com.setarit.quietticketscanner.domain.pattern.Subject;
 import com.setarit.quietticketscanner.preferences.Preferences_;
@@ -37,7 +38,7 @@ public class AsyncScanFileLoader extends Subject {
 
     private Context context;
     private ScanFile loadingResult;
-    private String visitorsAsJsonString;
+    private String seatsAsJsonString;
 
     public AsyncScanFileLoader(Context context) {
         this.context = context;
@@ -52,7 +53,7 @@ public class AsyncScanFileLoader extends Subject {
         try {
             String rawJson = loadFileToString(uri);
             loadingResult = parseScanFile(rawJson);
-            visitorsAsJsonString = convertVisitorsToJson();
+            seatsAsJsonString = convertSeatsToJson();
             savePreferences(uri);
             this.notifyObservers();
         } catch (IOException e) {
@@ -68,7 +69,7 @@ public class AsyncScanFileLoader extends Subject {
         preferences.eventName().put(loadingResult.getEvent().getName());
         preferences.imageBase64().put(loadingResult.getEvent().getImage());
         preferences.eventId().put(loadingResult.getEvent().getId());
-        preferences.visitorsJson().put(visitorsAsJsonString);
+        preferences.seatsJson().put(seatsAsJsonString);
         preferences.hasScanned().put(false);
     }
 
@@ -104,8 +105,8 @@ public class AsyncScanFileLoader extends Subject {
     }
 
     @SupposeBackground
-    public String convertVisitorsToJson() {
-        VistorsToJsonParser parser = new VistorsToJsonParser(loadingResult.getVisitors());
+    public String convertSeatsToJson() {
+        SeatsToJsonParser parser = new SeatsToJsonParser(loadingResult.getSeats());
         return parser.convertToJson();
     }
 

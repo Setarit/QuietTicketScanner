@@ -14,11 +14,11 @@ public class ScanFile implements Serializable{
     @Expose
     private Event event;
     @Expose
-    private Collection<Visitor> visitors;
+    private Collection<Seat> seats;
 
-    public ScanFile(Event event, Collection<Visitor> visitors) {
+    public ScanFile(Event event, Collection<Seat> seats) {
         this.event = event;
-        this.visitors = visitors;
+        this.seats = seats;
     }
 
     public Event getEvent() {
@@ -29,11 +29,11 @@ public class ScanFile implements Serializable{
         this.event = event;
     }
 
-    public Collection<Visitor> getVisitors() {
-        return visitors;
+    public Collection<Seat> getSeats() {
+        return seats;
     }
 
-    public void setVisitors(Collection<Visitor> visitors) {
-        this.visitors = visitors;
+    public void setSeats(Collection<Seat> seats) {
+        this.seats = seats;
     }
 }

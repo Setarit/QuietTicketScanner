@@ -3,6 +3,7 @@ package com.setarit.quietticketscanner.domain;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Setarit on 13/10/2017.
@@ -18,12 +19,15 @@ public class Seat implements Serializable {
     private boolean scanned;
     @Expose
     private String priceName;
+    @Expose
+    private Visitor visitor;
 
-    public Seat(String id, String name, boolean scanned, String priceName) {
+    public Seat(String id, String name, boolean scanned, String priceName, Visitor visitor) {
         this.id = id;
         this.name = name;
         this.scanned = scanned;
         this.priceName = priceName;
+        this.visitor = visitor;
     }
 
     public String getName() {
@@ -56,6 +60,14 @@ public class Seat implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Visitor getVisitor() {
+        return visitor;
+    }
+
+    public void setVisitor(Visitor visitor) {
+        this.visitor = visitor;
     }
 
     @Override

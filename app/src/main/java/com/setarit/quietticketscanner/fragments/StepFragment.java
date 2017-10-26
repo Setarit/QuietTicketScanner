@@ -30,7 +30,7 @@ public class StepFragment extends Fragment {
 
     @Click
     public void scanButton(){
-        if(preferences.visitorsJson().exists()){
+        if(preferences.seatsJson().exists()){
             Intent intent = new Intent(getActivity(), ScanController_.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             getActivity().startActivity(intent);

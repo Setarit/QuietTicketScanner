@@ -21,16 +21,13 @@ public class Visitor implements Serializable {
     private long bankingCode;
     @Expose
     private boolean went;
-    @Expose
-    private Collection<Seat> seats;
 
-    public Visitor(String id, String firstName, String lastName, long bankingCode, boolean went, Collection<Seat> seats) {
+    public Visitor(String id, String firstName, String lastName, long bankingCode, boolean went) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.bankingCode = bankingCode;
         this.went = went;
-        this.seats = seats;
     }
 
     public String getId() {
@@ -71,20 +68,6 @@ public class Visitor implements Serializable {
 
     public void setWent(boolean went) {
         this.went = went;
-    }
-
-    public Collection<Seat> getSeats() {
-        return seats;
-    }
-
-    public void setSeats(Collection<Seat> seats) {
-        this.seats = seats;
-    }
-
-    public void setAllSeatsScanned(){
-        for (Seat seat: seats){
-            seat.setScanned(true);
-        }
     }
 
     @Override
