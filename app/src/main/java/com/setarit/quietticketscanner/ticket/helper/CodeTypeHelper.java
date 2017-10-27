@@ -18,9 +18,11 @@ public class CodeTypeHelper {
     }
 
     private void sanitizeCode() {
-        if(code.startsWith("SQT-")){
+        code = code.toLowerCase();
+        if(code.startsWith("sqt-")){
             code = code.substring(4);
         }
+        code = code.replaceAll("-","");
     }
 
     private void determineCodeType(){

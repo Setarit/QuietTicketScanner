@@ -3,6 +3,7 @@ package com.setarit.quietticketscanner;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -65,7 +66,8 @@ public class CodeController extends AppCompatActivity {
         });
     }
 
-    private void verifyCode() {//TODO: extract reusable class
-
+    private void verifyCode() {
+        Log.i("RESULT>>>>" , ""+validationFacade.validate(code.getText().toString()));
+        Log.i("STATUS>>>>", ""+validationFacade.getLastScanStatus());
     }
 }
