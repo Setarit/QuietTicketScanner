@@ -23,7 +23,7 @@ public class CodeTypeHelper {
         }
     }
 
-    public void determineCodeType(){
+    private void determineCodeType(){
         try{
             Long.parseLong(code);
             type = CodeType.VISITOR_CODE;

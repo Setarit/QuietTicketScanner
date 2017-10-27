@@ -14,14 +14,12 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.widget.RelativeLayout;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.setarit.quietticketscanner.camera.Camera;
 import com.setarit.quietticketscanner.domain.Visitor;
-import com.setarit.quietticketscanner.domain.parse.VistorsToJsonParser;
 import com.setarit.quietticketscanner.permission.CameraPermission;
 import com.setarit.quietticketscanner.permission.PermissionRequestable;
 import com.setarit.quietticketscanner.preferences.Preferences_;

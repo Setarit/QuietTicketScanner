@@ -2,22 +2,22 @@ package com.setarit.quietticketscanner.domain.parse;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.setarit.quietticketscanner.domain.Seat;
 import com.setarit.quietticketscanner.domain.Visitor;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
- * Created by Setarit on 18/10/2017.
- * Converts the visitors to a JSON string
+ * Created by Setarit on 27/10/2017.
+ * Parses the seats to json
  */
 
-public class VistorsToJsonParser {
+public class ToJsonParser {
     private final Gson gson;
-    private Collection<Visitor> visitors;
+    private Collection<Seat> seats;
 
-    public VistorsToJsonParser(Collection<Visitor> visitors) {
-        this.visitors = visitors;
+    public ToJsonParser(Collection<Seat> seats) {
+        this.seats = seats;
         this.gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     }
 
@@ -26,6 +26,6 @@ public class VistorsToJsonParser {
      * @return The Visitor JSON as string
      */
     public String convertToJson(){
-        return gson.toJson(visitors);
+        return gson.toJson(seats);
     }
 }

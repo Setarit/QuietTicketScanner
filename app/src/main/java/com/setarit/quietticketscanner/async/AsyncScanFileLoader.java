@@ -5,26 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.setarit.quietticketscanner.domain.ScanFile;
 import com.setarit.quietticketscanner.domain.parse.FromJsonParser;
 import com.setarit.quietticketscanner.domain.parse.SeatsToJsonParser;
-import com.setarit.quietticketscanner.domain.parse.VistorsToJsonParser;
 import com.setarit.quietticketscanner.domain.pattern.Subject;
 import com.setarit.quietticketscanner.preferences.Preferences_;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.SupposeBackground;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.annotation.Target;
 
 /**
  * Created by Setarit on 16/10/2017.

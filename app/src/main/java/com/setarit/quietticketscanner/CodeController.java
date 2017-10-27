@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.setarit.quietticketscanner.preferences.Preferences_;
+import com.setarit.quietticketscanner.service.ValidationFacade;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -26,6 +27,7 @@ public class CodeController extends AppCompatActivity {
 
     @Pref
     public Preferences_ preferences;
+    private ValidationFacade validationFacade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class CodeController extends AppCompatActivity {
 
     @Background
     public void loadValidators() {
+        validationFacade = new ValidationFacade(preferences.seatsJson().get());
     }
 
     @Click(R.id.returnToScanActivity)
