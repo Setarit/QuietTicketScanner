@@ -8,7 +8,7 @@ import com.setarit.quietticketscanner.preferences.Preferences;
  * Interface for verifying a code
  */
 
-public interface TicketValidatable {
+public interface ValidationStrategy {
     /**
      * Checks if the code is valid
      * @param code The code to validate

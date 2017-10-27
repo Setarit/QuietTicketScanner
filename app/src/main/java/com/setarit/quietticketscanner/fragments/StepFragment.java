@@ -32,7 +32,7 @@ public class StepFragment extends Fragment {
     public void scanButton(){
         if(preferences.seatsJson().exists()){
             Intent intent = new Intent(getActivity(), ScanController_.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             getActivity().startActivity(intent);
         }
     }
