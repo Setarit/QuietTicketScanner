@@ -35,4 +35,6 @@
     <string name="ticketAlreadyScanned">Het ticket is al gescand</string>
     <string name="ticketInvalid">Ticket onbekend</string>
     <string name="ticketValid">Geldig</string>
+    <string name="saving">Saving</string>
+    <string name="saving_failed">Opslaan mislukt</string>
 </resources>

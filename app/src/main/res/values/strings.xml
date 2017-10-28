@@ -43,4 +43,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <string name="no">No</string>
     <string name="yes_override_previous_scans">Yes, open a new file</string>
     <string name="warning_overriding_previous_scans">Warning, you are about to open a new scan file without saving the previous one. The scanned tickets will be reset.\\nDo you want to continue?</string>
+    <string name="saving">Saving</string>
+    <string name="saving_failed">Saving failed</string>
 </resources>

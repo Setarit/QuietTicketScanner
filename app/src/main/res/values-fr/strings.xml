@@ -35,4 +35,6 @@
     <string name="ticketAlreadyScanned">Le ticket a déjà été scanné</string>
     <string name="ticketInvalid">Ticket inconnu</string>
     <string name="ticketValid">Valide</string>
+    <string name="saving">Sauvegarder</string>
+    <string name="saving_failed">Sauvegarde échoué</string>
 </resources>

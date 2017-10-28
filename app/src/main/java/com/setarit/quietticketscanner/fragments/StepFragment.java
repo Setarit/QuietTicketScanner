@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.setarit.quietticketscanner.R;
+import com.setarit.quietticketscanner.SaveFileController_;
 import com.setarit.quietticketscanner.ScanController_;
 import com.setarit.quietticketscanner.ScanFileLoaderController_;
 import com.setarit.quietticketscanner.preferences.Preferences_;
@@ -33,6 +34,14 @@ public class StepFragment extends Fragment {
         if(preferences.seatsJson().exists()){
             Intent intent = new Intent(getActivity(), ScanController_.class);
             //intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            getActivity().startActivity(intent);
+        }
+    }
+
+    @Click
+    public void saveJsonButton(){
+        if(preferences.hasScanned().get()) {
+            Intent intent = new Intent(getActivity(), SaveFileController_.class);
             getActivity().startActivity(intent);
         }
     }

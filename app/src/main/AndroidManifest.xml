@@ -40,7 +40,8 @@
             android:name=".ScanController_"
             android:screenOrientation="landscape" />
         <activity android:name=".CodeController_" />
-        <activity android:name=".ResultController_"></activity>
+        <activity android:name=".ResultController_" />
+        <activity android:name=".SaveFileController_" android:screenOrientation="landscape"/>
     </application>
 
 </manifest>
