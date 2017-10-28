@@ -66,8 +66,17 @@ public class CodeController extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        validationFacade.saveCurrentSeatListToPreferences(preferences);
+    }
+
     private void verifyCode() {
-        Log.i("RESULT>>>>" , ""+validationFacade.validate(code.getText().toString()));
-        Log.i("STATUS>>>>", ""+validationFacade.getLastScanStatus());
+        preferences.hasScanned().put(true);
+        validationFacade.validate(code.getText().toString());
+        Intent intent = new Intent(this, ResultController_.class);
+        intent.putExtra("FACADE", validationFacade);
+        startActivity(intent);
     }
 }

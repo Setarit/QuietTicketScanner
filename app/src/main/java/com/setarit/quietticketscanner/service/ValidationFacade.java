@@ -4,13 +4,16 @@ import com.setarit.quietticketscanner.domain.Seat;
 import com.setarit.quietticketscanner.domain.Visitor;
 import com.setarit.quietticketscanner.domain.parse.FromJsonParser;
 import com.setarit.quietticketscanner.domain.parse.SeatsFromJsonParser;
+import com.setarit.quietticketscanner.domain.parse.SeatsToJsonParser;
 import com.setarit.quietticketscanner.domain.resource.SeatListSharedResource;
+import com.setarit.quietticketscanner.preferences.Preferences_;
 import com.setarit.quietticketscanner.ticket.CodeType;
 import com.setarit.quietticketscanner.ticket.ScanStatus;
 import com.setarit.quietticketscanner.ticket.ValidationStrategy;
 import com.setarit.quietticketscanner.ticket.helper.CodeTypeHelper;
 import com.setarit.quietticketscanner.ticket.validator.factory.ValidatorStrategyFactory;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,7 +21,7 @@ import java.util.List;
  * Facade for the validation
  */
 
-public class ValidationFacade {
+public class ValidationFacade implements Serializable{
     private SeatListSharedResource sharedResource;
     private ValidationStrategy strategy;
 
@@ -52,5 +55,10 @@ public class ValidationFacade {
 
     public ScanStatus getLastScanStatus(){
         return strategy.getLastScanStatus();
+    }
+
+    public void saveCurrentSeatListToPreferences(Preferences_ preferences) {
+        SeatsToJsonParser parser = new SeatsToJsonParser(sharedResource.getAllSeats());
+        preferences.seatsJson().put(parser.convertToJson());
     }
 }

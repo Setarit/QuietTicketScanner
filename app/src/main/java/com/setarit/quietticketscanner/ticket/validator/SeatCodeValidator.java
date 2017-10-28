@@ -5,6 +5,7 @@ import com.setarit.quietticketscanner.domain.resource.SeatListSharedResource;
 import com.setarit.quietticketscanner.ticket.ScanStatus;
 import com.setarit.quietticketscanner.ticket.ValidationStrategy;
 
+import java.io.Serializable;
 import java.util.Collections;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Collections;
  * Validates a seat code
  */
 
-public class SeatCodeValidator implements ValidationStrategy {
+public class SeatCodeValidator implements ValidationStrategy, Serializable {
     private SeatListSharedResource seatListSharedResource;
     private ScanStatus status;
 
@@ -24,6 +25,7 @@ public class SeatCodeValidator implements ValidationStrategy {
     public boolean isValid(String code) {
         Seat found = seatListSharedResource.findSeat(code);
         seatListSharedResource.setLastScannedSeats(Collections.singletonList(found));
+        seatListSharedResource.setLastScannedVisitor(found.getVisitor());
         boolean valid = false;
         if(found == null){
             status = ScanStatus.INVALID;
@@ -32,6 +34,7 @@ public class SeatCodeValidator implements ValidationStrategy {
                 status = ScanStatus.ALREADY_SCANNED;
             }else{
                 status = ScanStatus.VALID;
+                found.setScanned(true);
                 valid = true;
             }
         }

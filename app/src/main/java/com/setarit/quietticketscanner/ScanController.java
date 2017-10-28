@@ -23,12 +23,14 @@ import com.setarit.quietticketscanner.domain.Visitor;
 import com.setarit.quietticketscanner.permission.CameraPermission;
 import com.setarit.quietticketscanner.permission.PermissionRequestable;
 import com.setarit.quietticketscanner.preferences.Preferences_;
+import com.setarit.quietticketscanner.service.ValidationFacade;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
@@ -53,11 +55,11 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
     @ViewById
     public RelativeLayout scanContainer;
     private ZXingScannerView scanningView;
+    private ValidationFacade validationFacade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadValidators();
         verifyCameraPermission();
         this.camera = new Camera((CameraManager) getSystemService(Context.CAMERA_SERVICE));
         hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
@@ -65,6 +67,8 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
 
     @Background
     public void loadValidators() {
+        validationFacade = new ValidationFacade(preferences.seatsJson().get());
+        startCameras();
     }
 
     @Override
@@ -133,6 +137,11 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
     @Override
     protected void onResume() {
         super.onResume();
+        loadValidators();
+    }
+
+    @UiThread
+    public void startCameras(){
         scanningView.startCamera();
         scanningView.setResultHandler(this);
         if(hasFlash){
@@ -144,6 +153,9 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
     protected void onPause() {
         super.onPause();
         scanningView.stopCamera();
+        if(validationFacade != null) {
+            validationFacade.saveCurrentSeatListToPreferences(preferences);
+        }
     }
 
     @Override
@@ -167,13 +179,11 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
      * @param code The code to verify
      */
     private void checkCode(String code) {
-       //TODO
-    }
-
-    @Background
-    public void updateCurrentScanStatusToPreferences(List<Visitor> updatedVisitors, boolean hasScanned) {
-
-        preferences.hasScanned().put(hasScanned);
+        preferences.hasScanned().put(true);
+        validationFacade.validate(code);
+        Intent intent = new Intent(this, ResultController_.class);
+        intent.putExtra("FACADE", validationFacade);
+        startActivity(intent);
     }
 
     private void vibrate() {

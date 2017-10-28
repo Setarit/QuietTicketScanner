@@ -3,6 +3,7 @@ package com.setarit.quietticketscanner.domain.resource;
 import com.setarit.quietticketscanner.domain.Seat;
 import com.setarit.quietticketscanner.domain.Visitor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import java.util.Map;
  * Shared resource holding the seat list
  */
 
-public class SeatListSharedResource {
+public class SeatListSharedResource implements Serializable {
     private Map<String, Seat> seatMap;
     private Visitor lastScannedVisitor;
     private List<Seat> lastScannedSeats;

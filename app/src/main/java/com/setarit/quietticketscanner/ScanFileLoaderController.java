@@ -1,6 +1,8 @@
 package com.setarit.quietticketscanner;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -83,6 +85,31 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
 
     @Click(R.id.findJsonScanFile)
     public void startOpenDocumentIntent(){
+        if(preferences.hasScanned().get()){
+            showWarningDialog();
+        }else {
+            openFileSelectorActivity();
+        }
+    }
+
+    private void showWarningDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.warning_overriding_previous_scans)
+            .setPositiveButton(R.string.yes_override_previous_scans, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                    openFileSelectorActivity();
+                }
+            })
+            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
+        builder.create().show();
+    }
+
+    private void openFileSelectorActivity() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("application/json");

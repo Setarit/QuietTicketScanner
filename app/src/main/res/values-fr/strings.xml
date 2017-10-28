@@ -23,4 +23,16 @@
     <string name="qr_reader_license">QR Licence</string>
     <string name="general_license">Licence général</string>
     <string name="about_content">Cette application doit être utilisé conjointement avec https://quietticket.com. S\'il vous plaît noter que QuietTicket est un produit et une marque déposée de Setarit. Le code source de cette application est disponible gratuitement sur https://github.com/Setarit/QuietTicketScanner. Plus de produits et d\'informations peuvent être trouvées à http://setarit.com</string>
+    <string name="no">Non</string>
+    <string name="warning_overriding_previous_scans">Veuillez noter que vous êtes sur le point d\'ouvrir un nouveau fichier de numérisation sans enregistrer le précédent. Les tickets scannés seront réinitialisés.\nVoulez-vous continuer?</string>
+    <string name="yes_override_previous_scans">Oui, ouvrez un nouveau fichier</string>
+    <string name="loading">Chargement</string>
+    <string name="loadingFailed">Chargement échoué</string>
+    <string name="insufficientStorageReadPermissions">L\'application n\'a pas l\'autorisation de lire à partir du stockage. Veuillez redémarrer l\'application et autoriser l\'accès au stockage</string>
+    <string name="findJsonFile">Trouver un fichier de numérisation</string>
+    <string name="openJsonFile">Ouvrir</string>
+    <string name="saveJsonFile">Enregistrez</string>
+    <string name="ticketAlreadyScanned">Le ticket a déjà été scanné</string>
+    <string name="ticketInvalid">Ticket inconnu</string>
+    <string name="ticketValid">Valide</string>
 </resources>

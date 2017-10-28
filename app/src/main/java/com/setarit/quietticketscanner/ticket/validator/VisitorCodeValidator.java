@@ -5,6 +5,7 @@ import com.setarit.quietticketscanner.domain.resource.SeatListSharedResource;
 import com.setarit.quietticketscanner.ticket.ScanStatus;
 import com.setarit.quietticketscanner.ticket.ValidationStrategy;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Arrays;
  * Validates a visitor code
  */
 
-public class VisitorCodeValidator implements ValidationStrategy {
+public class VisitorCodeValidator implements ValidationStrategy, Serializable {
     private SeatListSharedResource seatListSharedResource;
     private ScanStatus scanStatus;
 
