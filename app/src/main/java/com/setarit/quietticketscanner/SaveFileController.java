@@ -2,6 +2,7 @@ package com.setarit.quietticketscanner;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.ParcelFileDescriptor;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 @EActivity(R.layout.activity_save_file_controller)
@@ -45,20 +48,28 @@ public class SaveFileController extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 2 && resultCode == RESULT_OK){
-            writeFile(data.getData());
+            showSavingSnackbar();
+            try {
+                writeFile(data.getData());
+            } catch (IOException e) {
+                showSavingFailedSnackbar();
+                e.printStackTrace();
+            }
         }
     }
 
-    private void writeFile(Uri uri) {
-        File file = new File(uri.getPath());
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter(file);
-            writer.write(preferences.seatsJson().get());
-            writer.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    private void writeFile(Uri uri) throws IOException {
+        ParcelFileDescriptor pfd = getContentResolver().openFileDescriptor(uri, "w");
+        FileOutputStream fileOutputStream = new FileOutputStream(pfd.getFileDescriptor());
+        fileOutputStream.write(preferences.seatsJson().get().getBytes());
+        fileOutputStream.close();
+        pfd.close();
+    }
+
+    private void showSavingFailedSnackbar() {
+        if(loadingSnackbar != null) loadingSnackbar.dismiss();
+        loadingSnackbar = Snackbar.make(saveJsonContainer, R.string.saving_failed, Snackbar.LENGTH_SHORT);
+        loadingSnackbar.show();
     }
 
     private void showSavingSnackbar() {
