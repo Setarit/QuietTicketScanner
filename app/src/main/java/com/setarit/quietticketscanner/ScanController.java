@@ -1,25 +1,23 @@
 package com.setarit.quietticketscanner;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.camera2.CameraManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
-import com.setarit.quietticketscanner.camera.Camera;
-import com.setarit.quietticketscanner.domain.Visitor;
 import com.setarit.quietticketscanner.permission.CameraPermission;
 import com.setarit.quietticketscanner.permission.PermissionRequestable;
 import com.setarit.quietticketscanner.preferences.Preferences_;
@@ -47,10 +45,11 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
     private boolean useFlash;
     private boolean hasFlash;
 
+    @ViewById(R.id.useFlash)
+    FloatingActionButton useFlashButton;
+
     @Pref
     public Preferences_ preferences;
-
-    private Camera camera;
 
     @ViewById
     public RelativeLayout scanContainer;
@@ -61,7 +60,6 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         verifyCameraPermission();
-        this.camera = new Camera((CameraManager) getSystemService(Context.CAMERA_SERVICE));
         hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
@@ -88,6 +86,13 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
     @AfterViews
     public void setScanButtonAsActive() {
         findViewById(R.id.scanButton).setBackgroundColor(ContextCompat.getColor(this, R.color.colorActiveButton));
+    }
+
+    @AfterViews
+    public void updateUseFlashButtonVisibility(){
+        if(!hasFlash){
+            useFlashButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     @AfterViews
@@ -193,7 +198,6 @@ public class ScanController extends FragmentActivity implements ZXingScannerView
         }else{
             vibrator.vibrate(500);
         }
-
     }
 
     //Todo: sound

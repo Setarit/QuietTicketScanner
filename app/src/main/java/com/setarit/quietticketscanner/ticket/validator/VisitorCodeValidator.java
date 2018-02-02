@@ -6,7 +6,6 @@ import com.setarit.quietticketscanner.ticket.ScanStatus;
 import com.setarit.quietticketscanner.ticket.ValidationStrategy;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 /**
  * Created by Setarit on 27/10/2017.
@@ -33,6 +32,7 @@ public class VisitorCodeValidator implements ValidationStrategy, Serializable {
             }else{
                 seatListSharedResource.setLastScannedVisitor(found);
                 seatListSharedResource.setLastScannedSeats(seatListSharedResource.setAllSeatsScanned(found));
+                found.setWent(true);
                 valid = true;
                 scanStatus = ScanStatus.VALID;
             }

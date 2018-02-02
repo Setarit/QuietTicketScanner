@@ -6,10 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.widget.ImageView;
@@ -17,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.setarit.quietticketscanner.async.AsyncScanFileLoader;
-import com.setarit.quietticketscanner.domain.ScanFile;
 import com.setarit.quietticketscanner.domain.pattern.Observer;
 import com.setarit.quietticketscanner.fragments.DataFragment;
 import com.setarit.quietticketscanner.fragments.loader.DataFragmentLoader;
@@ -177,5 +175,10 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
             backgroundImage.setImageBitmap(dataFragment.getEventBackground());
             backgroundImage.setScaleType(ImageView.ScaleType.FIT_XY);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
     }
 }

@@ -25,15 +25,14 @@ public class StepFragment extends Fragment {
     @Click
     public void openJsonButton(){
         Intent intent = new Intent(getActivity(), ScanFileLoaderController_.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         getActivity().startActivity(intent);
+        finishParentActivity();
     }
 
     @Click
     public void scanButton(){
         if(preferences.seatsJson().exists()){
             Intent intent = new Intent(getActivity(), ScanController_.class);
-            //intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             getActivity().startActivity(intent);
         }
     }
@@ -43,6 +42,11 @@ public class StepFragment extends Fragment {
         if(preferences.hasScanned().get()) {
             Intent intent = new Intent(getActivity(), SaveFileController_.class);
             getActivity().startActivity(intent);
+            finishParentActivity();
         }
+    }
+
+    private void finishParentActivity(){
+        getActivity().finish();
     }
 }
