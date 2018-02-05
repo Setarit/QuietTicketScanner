@@ -52,7 +52,7 @@ public class SaveFileController extends FragmentActivity {
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("application/json");
-        intent.putExtra(Intent.EXTRA_TITLE, preferences.eventName().get()+"_"+preferences.eventId().get());
+        intent.putExtra(Intent.EXTRA_TITLE, preferences.eventName().get()+"_"+preferences.eventId().get()+".json");
         startActivityForResult(intent, SaveFileController.SAVE_DIALOG);
     }
 
@@ -63,7 +63,7 @@ public class SaveFileController extends FragmentActivity {
             try {
                 writeFile(data.getData());
             } catch (IOException e) {
-                showSavingFailedSnackbar();
+                showSavingFailedSnackbar(R.string.saving_failed);
                 e.printStackTrace();
             }
         }
@@ -78,9 +78,9 @@ public class SaveFileController extends FragmentActivity {
         pfd.close();
     }
 
-    private void showSavingFailedSnackbar() {
+    private void showSavingFailedSnackbar(int resourceId) {
         if(loadingSnackbar != null) loadingSnackbar.dismiss();
-        loadingSnackbar = Snackbar.make(saveJsonContainer, R.string.saving_failed, Snackbar.LENGTH_SHORT);
+        loadingSnackbar = Snackbar.make(saveJsonContainer, resourceId, Snackbar.LENGTH_SHORT);
         loadingSnackbar.show();
     }
 
