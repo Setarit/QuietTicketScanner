@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -15,6 +17,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.FutureTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.setarit.quietticketscanner.async.AsyncScanFileLoader;
 import com.setarit.quietticketscanner.domain.pattern.Observer;
 import com.setarit.quietticketscanner.fragments.DataFragment;
@@ -30,6 +37,8 @@ import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
+
+import java.util.concurrent.ExecutionException;
 
 @EActivity(R.layout.activity_scan_file_loader_controller)
 @Fullscreen
@@ -162,11 +171,19 @@ public class ScanFileLoaderController extends FragmentActivity implements Observ
     @Background
     public void loadEventBackground(){
         String rawImage = preferences.imageBase64().get();
-        String data = rawImage.substring(rawImage.indexOf(",")+1);
-        byte[] decodedString = Base64.decode(data, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        dataFragment.setEventBackground(decodedByte);
-        showEventBackgroundImage();
+        FutureTarget<Bitmap> target = Glide
+                .with(this)
+                .asBitmap()
+                .load(rawImage)
+                .submit(container.getWidth(), container.getHeight());
+        try {
+            dataFragment.setEventBackground(target.get());
+            showEventBackgroundImage();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @UiThread
