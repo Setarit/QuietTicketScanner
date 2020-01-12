@@ -10,7 +10,7 @@ import com.setarit.quietticketscanner.domain.ScanFile;
 import com.setarit.quietticketscanner.domain.parse.FromJsonParser;
 import com.setarit.quietticketscanner.domain.parse.SeatsToJsonParser;
 import com.setarit.quietticketscanner.domain.pattern.Subject;
-import com.setarit.quietticketscanner.preferences.Preferences_;
+import com.setarit.quietticketscanner.preferences.*;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EBean;
